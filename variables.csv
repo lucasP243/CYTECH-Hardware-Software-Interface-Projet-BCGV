@@ -42,14 +42,14 @@ Id;Name;Type;Dim;Default;Comment
 41;indicator_motor_pressure;command_out_t;;0;Output buffer for the motor pressure indicator.
 42;indicator_oil_overheat;command_out_t;;0;Output buffer for the oil overhead indicator.
 43;indicator_brake_failure;command_out_t;;0;Output buffer for the brake failure indicator.
-44;fsm_sidelights;fsm_lights_t;;0;Current state of the FSM for the sidelights.
-45;fsm_headlights;fsm_lights_t;;0;Current state of the FSM for the headlights.
-46;fsm_redlights;fsm_lights_t;;0;Current state of the FSM for the redlights.
-47;fsm_left_blinker;fsm_blinkers_t;;0;Current state of the FSM for the left blinker.
+44;fsm_sidelights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the sidelights.
+45;fsm_headlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the headlights.
+46;fsm_redlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the redlights.
+47;fsm_left_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the left blinker.
 48;fsm_left_linker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
-49;fsm_right_blinker;fsm_blinkers_t;;0;Current state of the FSM for the right blinker.
+49;fsm_right_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the right blinker.
 50;fsm_right_blinker_timer;fsm_timer_t;;0;Timer for the right blinker FSM.
-51;fsm_warnings;fsm_blinkers_t;;0;Current state of the FSM for the warnings.
+51;fsm_warnings;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the warnings.
 52;fsm_warnings_timer;fsm_timer_t;;0;Timer for the warnings FSM.
-53;fsm_wipers;fsm_wipers_t;;0;Current state of the FSM for the wipers.
+53;fsm_wipers;fsm_wipers_t;;FSM_WIPERS_OFF;Current state of the FSM for the wipers.
 54;fsm_wipers_timer;fsm_timer_t;;0;Timer for the wipers FSM.
