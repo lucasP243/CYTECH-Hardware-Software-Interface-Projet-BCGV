@@ -1,0 +1,55 @@
+Id;Name;Type;Dim;Default;Comment
+1;warnings_in;command_in_t;;0;Input buffer for the warnings command.
+2;warnings_out;command_out_t;;0;Output buffer for the warnings command.
+3;sidelights_in;command_in_t;;0;Input buffer for the sidelights command.
+4;sidelights_out;command_out_t;;0;Output buffer for the sidelights command.
+5;headlights_in;command_in_t;;0;Input buffer for the headlights command.
+6;headlights_out;command_out_t;;0;Output buffer for the headlight command.
+7;redlights_in;command_in_t;;0;Input buffer for the redlights command.
+8;redlights_out;command_out_t;;0;Output buffer for the redlights command.
+9;left_blinker_in;command_in_t;;0;Input buffer for the left blinker command.
+10;left_blinker_out;command_out_t;;0;Output buffer for the left blinker command.
+11;right_blinker_in;command_in_t;;0;Input buffer for the right blinker command.
+12;right_blinker_out;command_out_t;;0;Output buffer for the right blinker command.
+13;wipers_in;command_in_t;;0;Input buffer for the wipers command.
+14;wipers_out;command_out_t;;0;Output buffer for the wipers command.
+15;washer_fluid_in;command_in_t;;0;Input buffer for the washer fluid command.
+16;washer_fluid_out;command_out_t;;0;Output buffer for the washer fluid command.
+17;comodo_crc8;crc8_t;;0;Input buffer for the COMODO frame’s CRC8 code.
+18;mux_frame_id;mux_id_t;;0;Input buffer for the MUX frame ID.
+19;frame_mileage_in;frame_mileage_t;;0;Input buffer for the vehicle’s mileage.
+20;frame_mileage_out;frame_mileage_t;;0;Output buffer for the vehicle’s mileage.
+21;frame_speed_in;frame_speed_t;;0;Input buffer for the vehicle’s speed.
+22;frame_speed_out;frame_speed_t;;0;Output buffer for the vehicle’s speed.
+23;frame_flags_in;frame_flags_t;;0;Input buffer for the vehicle’s frame status information.
+24;motor_flags_in;motor_flags_t;;0;Input buffer for the vehicle’s motor status information.
+25;tank_level_in;tank_level_t;;0;Input buffer for the vehicle’s tank fuel level.
+26;tank_level_out;tank_level_t;;0;Output buffer for the vehicle’s tank fuel level.
+27;motor_speed_in;motor_speed_t;;0;Input buffer for the vehicle’s motor speed.
+28;motor_speed_out;motor_speed_t;;0;Output buffer for the vehicle’s motor speed.
+29;battery_flags_in;battery_flags_t;;0;Input buffer for the vehicle’s battery status information.
+30;indicator_sidelights;command_out_t;;0;Output buffer for the sidelights indicator.
+31;indicator_headlights;command_out_t;;0;Output buffer for the headlight indicator.
+32;indicator_redlights;command_out_t;;0;Output buffer for the redlights indicator.
+33;indicator_low_fuel;command_out_t;;0;Output buffer for the low fuel indicator.
+34;indicator_motor_failure;command_out_t;;0;Output buffer for the motor failure indicator.
+35;indicator_tire_pressure;command_out_t;;0;Output buffer for the low tire pressure indicator.
+36;indicator_brake_pads_failure;command_out_t;;0;Output buffer for the brake pads failure indicator.
+37;indicator_battery_low;command_out_t;;0;Output buffer for the battery low indicator.
+38;indicator_warnings;command_out_t;;0;Output buffer for the warnings indicator.
+39;indicator_battery_failure;command_out_t;;0;Output buffer for the battery failure indicator.
+40;indicator_cooling_liquid_overheat;command_out_t;;0;Output buffer for the cooling liquid overheat indicator.
+41;indicator_motor_pressure;command_out_t;;0;Output buffer for the motor pressure indicator.
+42;indicator_oil_overheat;command_out_t;;0;Output buffer for the oil overhead indicator.
+43;indicator_brake_failure;command_out_t;;0;Output buffer for the brake failure indicator.
+44;fsm_sidelights;fsm_lights_t;;0;Current state of the FSM for the sidelights.
+45;fsm_headlights;fsm_lights_t;;0;Current state of the FSM for the headlights.
+46;fsm_redlights;fsm_lights_t;;0;Current state of the FSM for the redlights.
+47;fsm_left_blinker;fsm_blinkers_t;;0;Current state of the FSM for the left blinker.
+48;fsm_left_linker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
+49;fsm_right_blinker;fsm_blinkers_t;;0;Current state of the FSM for the right blinker.
+50;fsm_right_blinker_timer;fsm_timer_t;;0;Timer for the right blinker FSM.
+51;fsm_warnings;fsm_blinkers_t;;0;Current state of the FSM for the warnings.
+52;fsm_warnings_timer;fsm_timer_t;;0;Timer for the warnings FSM.
+53;fsm_wipers;fsm_wipers_t;;0;Current state of the FSM for the wipers.
+54;fsm_wipers_timer;fsm_timer_t;;0;Timer for the wipers FSM.

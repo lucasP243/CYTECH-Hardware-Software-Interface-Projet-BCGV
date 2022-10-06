@@ -1,0 +1,17 @@
+Name;Genre;Declaration;Domain;Comment
+command_in_t;atom;bool;{0, 1};Command received on input, can be either ON (true) or OFF (false).
+command_out_t;atom;bool;{0, 1};Command sent on output, can be either ON (true) or OFF (false).
+crc8_t;atom;uint8_t;;8-bit CRC code.
+mux_id_t;atom;uint8_t;[0, 100];ID of a MUX frame.
+frame_mileage_t;atom;uint32_t;;Mileage of the vehicle, in kilometers.
+frame_speed_t;atom;uint8_t;[0, 300];Current speed of the vehicle, in kilometers per hour.
+frame_flags_t;atom;uint8_t;;Flags for the frame defects : tire pressure on bit 0b01, brakes failure on bit 0b10.
+motor_flags_t;atom;uint8_t;;Flags for the motor defects : motor pressure on bit 0b001, cooling liquid overheat on bit 0b010, oil overheat on bit 0b100.
+tank_level_t;atom;uint8_t;[0, 40];Amount of remaining fuel in the tank.
+motor_speed_t;atom;uint32_t;[0, 10000];Current motor speed, in rotations per minute.
+battery_flags_t;atom;uint8_t;;Flags for the battery defects: battery low on bit 0b01, battery failure on bit 0b10.
+message_id_t;atom;uint8_t;;ID of the response message sent to the light management unit.
+fsm_lights_t;enum;enum { FSM_LIGHTS_OFF = 0, FSM_LIGHTS_ON = 0b1, FSM_LIGHTS_ACQUITTED = 0b10, FSM_LIGHTS_ERROR = -1 };;Finite state machine for the lights systems.
+fsm_blinkers_t;enum;enum { FSM_BLINKERS_OFF = 0, FSM_BLINKERS_ACTIVE_ON = 0b11, FSM_BLINKERS_ACTIVE_OFF = 0b01, FSM_BLINKERS_ACTIVE_ON_ACQUITTED = 0b111, FSM_BLINKERS_ACTIVE_OFF_ACQUITTED = 0b101, FSM_BLINKERS_ERROR = -1 };;Finite state machine for the blinkers systems.
+fsm_wipers_t;enum;enum { FSM_WIPERS_OFF = 0, FSM_WIPERS_ON = 0b1, FSM_WIPERS_WASH = 0b11, FSM_WIPERS_WAIT = 0b10 };;Finite state machine for the wipers system.
+fsm_timer_t;atom;uint8_t;;Timer for the finite state machines.
