@@ -7,7 +7,7 @@ CLANG_FLAGS=-i --style=LLVM
 
 # ----- DATA_DICTIONARY TARGET -----
 
-build-data_dictionary: lib/data_dictionary.a clean
+build-data_dictionary: lib/data_dictionary.a clean-data_dictionary
 
 lib/data_dictionary.a: lib/data_dictionary.o
 	ar -rc $@ $<
@@ -19,5 +19,5 @@ lib/data_dictionary.c:
 	python3 generate_data_dictionary.py
 	clang-format $@ lib/data_dictionary.h $(CLANG_FLAGS)
 
-clean: lib/data_dictionary.a
+clean-data_dictionary: lib/data_dictionary.a
 	rm lib/data_dictionary.[!ah]
