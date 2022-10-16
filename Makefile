@@ -15,6 +15,10 @@ debug: bin/app
 bin/app: src/app.c
 	gcc -I $(WORKING_DIR) -o $@ $^ lib/*.a
 
+clean:
+	rm -f lib/data_dictionary.[ah]
+	rm -f bin/app
+
 # ----- DATA_DICTIONARY TARGET -----
 
 build-data_dictionary: lib/data_dictionary.a clean-data_dictionary
