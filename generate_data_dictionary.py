@@ -60,6 +60,15 @@ with open('lib/data_dictionary.h', mode='w') as header_file:
             """.format(**variable)
         )
 
+    header_file.write(
+        """
+        /**
+         * \\brief Initialization function for application variables
+         */
+         void init();
+         """
+    )
+
     header_file.write("#endif")
 
 with open('lib/data_dictionary.c', mode='w') as source_file:
@@ -120,3 +129,22 @@ with open('lib/data_dictionary.c', mode='w') as source_file:
 
             """.format(setter=setter, **variable)
         )
+
+    source_file.write(
+        """
+        void init() {
+        """
+    )
+
+    for variable in variables:
+        source_file.write(
+            """
+            application.{Name} = {Default};
+            """.format(**variable)
+        )
+
+    source_file.write(
+        """
+        }
+        """
+    )

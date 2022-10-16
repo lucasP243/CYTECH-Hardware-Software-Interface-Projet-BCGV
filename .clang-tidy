@@ -1,2 +1,2 @@
 ---
-Checks: '*,-llvmlibc-*'
+Checks: '*,-cppcoreguidelines-*,-hicpp-*,-llvmlibc-*,-modernize-*,-clang-analyzer-cplusplus.*,-llvm-header-guard'

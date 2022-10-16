@@ -15,7 +15,7 @@ Id;Name;Type;Dim;Default;Comment
 14;wipers_out;command_out_t;;0;Output buffer for the wipers command.
 15;washer_fluid_in;command_in_t;;0;Input buffer for the washer fluid command.
 16;washer_fluid_out;command_out_t;;0;Output buffer for the washer fluid command.
-17;comodo_crc8;crc8_t;;0;Input buffer for the COMODO frame’s CRC8 code.
+17;comodo_crc_8;crc_8_t;;0;Input buffer for the COMODO frame’s CRC8 code.
 18;mux_frame_id;mux_id_t;;0;Input buffer for the MUX frame ID.
 19;frame_mileage_in;frame_mileage_t;;0;Input buffer for the vehicle’s mileage.
 20;frame_mileage_out;frame_mileage_t;;0;Output buffer for the vehicle’s mileage.

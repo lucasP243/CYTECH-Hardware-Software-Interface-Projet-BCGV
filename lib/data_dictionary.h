@@ -24,7 +24,7 @@ typedef bool command_out_t;
 /**
  * \brief 8-bit CRC code.
  */
-typedef uint8_t crc8_t;
+typedef uint8_t crc_8_t;
 
 /**
  * \brief ID of a MUX frame.
@@ -304,16 +304,16 @@ command_out_t get_washer_fluid_out();
 void set_washer_fluid_out(command_out_t);
 
 /**
- * \brief Getter for application.comodo_crc8
- * \return crc8_t: Input buffer for the COMODO frame’s CRC8 code.
+ * \brief Getter for application.comodo_crc_8
+ * \return crc_8_t: Input buffer for the COMODO frame’s CRC8 code.
  */
-crc8_t get_comodo_crc8();
+crc_8_t get_comodo_crc_8();
 
 /**
- * \brief Setter for application.comodo_crc8
- * \param crc8_t: Input buffer for the COMODO frame’s CRC8 code.
+ * \brief Setter for application.comodo_crc_8
+ * \param crc_8_t: Input buffer for the COMODO frame’s CRC8 code.
  */
-void set_comodo_crc8(crc8_t);
+void set_comodo_crc_8(crc_8_t);
 
 /**
  * \brief Getter for application.mux_frame_id
@@ -767,4 +767,8 @@ fsm_timer_t get_fsm_wipers_timer();
  */
 void set_fsm_wipers_timer(fsm_timer_t);
 
+/**
+ * \brief Initialization function for application variables
+ */
+void init();
 #endif
