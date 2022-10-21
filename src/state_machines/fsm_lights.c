@@ -71,22 +71,19 @@ __attribute__((unused)) void fsm_lights_tick(fsm_lights_t *fsm_p,
   *timer_p += 1;
 }
 
-#define FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY 200
+#define FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY 100
 
 __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
 
-  fsm_lights_state_t state = get_fsm_headlights();
   fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
   fsm_timer_t timer = get_fsm_headlights_timer();
 
   if (get_headlights_in()) {
 
-    if (state == FSM_LIGHTS_ON) {
-      if (get_headlights_acknowledgement()) {
-        event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
-      } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
-        event = FSM_LIGHTS_EVENT_ACK_MISSED;
-      }
+    if (get_headlights_acknowledgement()) {
+      event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
+    } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
+      event = FSM_LIGHTS_EVENT_ACK_MISSED;
     }
 
   } else {
@@ -98,18 +95,15 @@ __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
 
 __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
 
-  fsm_lights_state_t state = get_fsm_sidelights();
   fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
   fsm_timer_t timer = get_fsm_sidelights_timer();
 
   if (get_sidelights_in()) {
 
-    if (state == FSM_LIGHTS_ON) {
-      if (get_sidelights_acknowledgement()) {
-        event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
-      } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
-        event = FSM_LIGHTS_EVENT_ACK_MISSED;
-      }
+    if (get_sidelights_acknowledgement()) {
+      event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
+    } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
+      event = FSM_LIGHTS_EVENT_ACK_MISSED;
     }
 
   } else {
@@ -121,18 +115,15 @@ __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
 
 __attribute__((unused)) fsm_lights_event_t compute_redlights_event() {
 
-  fsm_lights_state_t state = get_fsm_redlights();
   fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
   fsm_timer_t timer = get_fsm_redlights_timer();
 
   if (get_redlights_in()) {
 
-    if (state == FSM_LIGHTS_ON) {
-      if (get_redlights_acknowledgement()) {
-        event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
-      } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
-        event = FSM_LIGHTS_EVENT_ACK_MISSED;
-      }
+    if (get_redlights_acknowledgement()) {
+      event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
+    } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
+      event = FSM_LIGHTS_EVENT_ACK_MISSED;
     }
 
   } else {
