@@ -75,7 +75,7 @@ __attribute__((unused)) void fsm_lights_tick(fsm_lights_t *fsm_p,
 
 __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
 
-  fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
+  fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_headlights_timer();
 
   if (get_headlights_in()) {
@@ -84,6 +84,8 @@ __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
       event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
     } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
       event = FSM_LIGHTS_EVENT_ACK_MISSED;
+    } else {
+      event = FSM_LIGHTS_EVENT_COMMAND_ON;
     }
 
   } else {
@@ -95,7 +97,7 @@ __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
 
 __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
 
-  fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
+  fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_sidelights_timer();
 
   if (get_sidelights_in()) {
@@ -104,6 +106,8 @@ __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
       event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
     } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
       event = FSM_LIGHTS_EVENT_ACK_MISSED;
+    } else {
+      event = FSM_LIGHTS_EVENT_COMMAND_ON;
     }
 
   } else {
@@ -115,7 +119,7 @@ __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
 
 __attribute__((unused)) fsm_lights_event_t compute_redlights_event() {
 
-  fsm_lights_event_t event = FSM_LIGHTS_EVENT_NONE;
+  fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_redlights_timer();
 
   if (get_redlights_in()) {
@@ -124,6 +128,8 @@ __attribute__((unused)) fsm_lights_event_t compute_redlights_event() {
       event = FSM_LIGHTS_EVENT_ACK_RECEIVED;
     } else if (timer > FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY) {
       event = FSM_LIGHTS_EVENT_ACK_MISSED;
+    } else {
+      event = FSM_LIGHTS_EVENT_COMMAND_ON;
     }
 
   } else {

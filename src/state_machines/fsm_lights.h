@@ -23,11 +23,10 @@ typedef enum fsm_lights_state_t {
  * \brief The different events triggering state changes in the FSM.
  */
 typedef enum fsm_lights_event_t {
-  FSM_LIGHTS_EVENT_NONE = 0,
-  FSM_LIGHTS_EVENT_ANY = 1,
-  FSM_LIGHTS_EVENT_COMMAND_ON = 2,
-  FSM_LIGHTS_EVENT_COMMAND_OFF = 3,
-  FSM_LIGHTS_EVENT_ACK_RECEIVED = 4,
+  FSM_LIGHTS_EVENT_ANY = 0,
+  FSM_LIGHTS_EVENT_COMMAND_ON = 1,
+  FSM_LIGHTS_EVENT_COMMAND_OFF = 2,
+  FSM_LIGHTS_EVENT_ACK_RECEIVED = 3,
   FSM_LIGHTS_EVENT_ACK_MISSED = -1,
 } fsm_lights_event_t;
 
