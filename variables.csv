@@ -1,6 +1,5 @@
 Id;Name;Type;Dim;Default;Comment
 1;warnings_in;command_in_t;;0;Input buffer for the warnings command.
-2;warnings_out;command_out_t;;0;Output buffer for the warnings command.
 3;sidelights_in;command_in_t;;0;Input buffer for the sidelights command.
 4;sidelights_out;command_out_t;;0;Output buffer for the sidelights command.
 55;sidelights_acknowledgement;acknowledgement_t;;false;Acknowledgement for the sidelights command message.

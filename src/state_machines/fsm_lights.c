@@ -2,6 +2,27 @@
 
 #include "fsm_lights.h"
 
+/**
+ * \brief The different states of the lights FSM.
+ */
+typedef enum fsm_lights_state_t {
+  FSM_LIGHTS_OFF = 0,
+  FSM_LIGHTS_ON = 1,
+  FSM_LIGHTS_ACKNOWLEDGED = 2,
+  FSM_LIGHTS_ERROR = -1
+} fsm_lights_state_t;
+
+/**
+ * \brief The different events triggering state changes in the FSM.
+ */
+typedef enum fsm_lights_event_t {
+  FSM_LIGHTS_EVENT_ANY = 0,
+  FSM_LIGHTS_EVENT_COMMAND_ON = 1,
+  FSM_LIGHTS_EVENT_COMMAND_OFF = 2,
+  FSM_LIGHTS_EVENT_ACK_RECEIVED = 3,
+  FSM_LIGHTS_EVENT_ACK_MISSED = -1,
+} fsm_lights_event_t;
+
 #define FSM_LIGHTS_TRANSITION_ALIGNMENT 16
 /**
  * \brief The list of all possible transitions from one state to another,
@@ -49,9 +70,16 @@ struct __attribute__((aligned(FSM_LIGHTS_TRANSITION_ALIGNMENT))) {
 #define FSM_LIGHTS_TRANSITIONS_COUNT                                           \
   (sizeof(fsm_lights_transitions) / sizeof(*fsm_lights_transitions))
 
-__attribute__((unused)) void fsm_lights_tick(fsm_lights_t *fsm_p,
-                                             fsm_lights_event_t event_p,
-                                             fsm_timer_t *timer_p) {
+/**
+ * \brief Tick a FSM with an event, changing its state if a corresponding
+ * transition exists.
+ *
+ * \param[in,out]   fsm_lights_t        Pointer to the FSM to tick.
+ * \param[in]       fsm_lights_event_t  The event to tick the FSM with.
+ * \param[in,out]   fsm_timer_t         Pointer to the FSM timer.
+ */
+static void fsm_lights_tick(fsm_lights_t *fsm_p, fsm_lights_event_t event_p,
+                            fsm_timer_t *timer_p) {
 #pragma unroll
   for (size_t i = 0; i < FSM_LIGHTS_TRANSITIONS_COUNT; i++) {
 
@@ -73,8 +101,11 @@ __attribute__((unused)) void fsm_lights_tick(fsm_lights_t *fsm_p,
 
 #define FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY 100
 
-__attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
+__attribute__((unused)) void compute_headlights() {
 
+  // Compute event
+
+  fsm_lights_t fsm = get_fsm_headlights();
   fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_headlights_timer();
 
@@ -92,13 +123,42 @@ __attribute__((unused)) fsm_lights_event_t compute_headlights_event() {
     event = FSM_LIGHTS_EVENT_COMMAND_OFF;
   }
 
-  return event;
+  // Tick FSM
+
+  fsm_lights_tick(&fsm, event, &timer);
+
+  // Update data
+
+  set_fsm_headlights(fsm);
+  set_fsm_headlights_timer(timer);
+
+  switch ((fsm_lights_state_t)fsm) {
+
+  case FSM_LIGHTS_OFF:
+  case FSM_LIGHTS_ERROR:
+    set_headlights_out(false);
+    set_indicator_headlights(false);
+    break;
+
+  case FSM_LIGHTS_ON:
+    set_headlights_out(true);
+    set_indicator_headlights(false);
+    break;
+
+  case FSM_LIGHTS_ACKNOWLEDGED:
+    set_headlights_out(true);
+    set_indicator_headlights(true);
+    break;
+  }
 }
 
-__attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
+__attribute__((unused)) void compute_sidelights_event() {
 
+  fsm_lights_t fsm = get_fsm_sidelights();
   fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_sidelights_timer();
+
+  // Compute event
 
   if (get_sidelights_in()) {
 
@@ -114,13 +174,42 @@ __attribute__((unused)) fsm_lights_event_t compute_sidelights_event() {
     event = FSM_LIGHTS_EVENT_COMMAND_OFF;
   }
 
-  return event;
+  // Tick FSM
+
+  fsm_lights_tick(&fsm, event, &timer);
+
+  // Update data
+
+  set_fsm_sidelights(fsm);
+  set_fsm_sidelights_timer(fsm);
+
+  switch ((fsm_lights_state_t)fsm) {
+
+  case FSM_LIGHTS_OFF:
+  case FSM_LIGHTS_ERROR:
+    set_sidelights_out(false);
+    set_indicator_sidelights(false);
+    break;
+
+  case FSM_LIGHTS_ON:
+    set_sidelights_out(true);
+    set_indicator_sidelights(false);
+    break;
+
+  case FSM_LIGHTS_ACKNOWLEDGED:
+    set_sidelights_out(true);
+    set_indicator_sidelights(true);
+    break;
+  }
 }
 
-__attribute__((unused)) fsm_lights_event_t compute_redlights_event() {
+__attribute__((unused)) void compute_redlights() {
 
+  fsm_lights_t fsm = get_fsm_redlights();
   fsm_lights_event_t event;
   fsm_timer_t timer = get_fsm_redlights_timer();
+
+  // Compute event
 
   if (get_redlights_in()) {
 
@@ -136,5 +225,29 @@ __attribute__((unused)) fsm_lights_event_t compute_redlights_event() {
     event = FSM_LIGHTS_EVENT_COMMAND_OFF;
   }
 
-  return event;
+  // Tick FSM
+
+  fsm_lights_tick(&fsm, event, &timer);
+
+  // Update data
+
+  set_fsm_redlights(fsm);
+  set_fsm_redlights_timer(timer);
+
+  switch ((fsm_lights_state_t)fsm) {
+
+  case FSM_LIGHTS_OFF:
+  case FSM_LIGHTS_ERROR:
+    set_redlights_out(false);
+    set_indicator_redlights(false);
+    break;
+  case FSM_LIGHTS_ON:
+    set_redlights_out(true);
+    set_indicator_redlights(false);
+    break;
+  case FSM_LIGHTS_ACKNOWLEDGED:
+    set_redlights_out(true);
+    set_indicator_redlights(true);
+    break;
+  }
 }

@@ -117,18 +117,6 @@ command_in_t get_warnings_in();
 void set_warnings_in(command_in_t);
 
 /**
- * \brief Getter for application.warnings_out
- * \return command_out_t: Output buffer for the warnings command.
- */
-command_out_t get_warnings_out();
-
-/**
- * \brief Setter for application.warnings_out
- * \param command_out_t: Output buffer for the warnings command.
- */
-void set_warnings_out(command_out_t);
-
-/**
  * \brief Getter for application.sidelights_in
  * \return command_in_t: Input buffer for the sidelights command.
  */
