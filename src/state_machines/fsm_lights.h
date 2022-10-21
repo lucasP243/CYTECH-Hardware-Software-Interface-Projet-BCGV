@@ -1,6 +1,6 @@
 /**
  * \brief This file implements a finite state machine to manage the light
- * systems (sidelights, headlights and redlights)
+ * systems (sidelights, headlights and redlights).
  *
  * \author Lucas Pinard
  */
