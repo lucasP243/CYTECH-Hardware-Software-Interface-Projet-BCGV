@@ -4,7 +4,7 @@ CLANG_FORMAT_FLAGS=-i --style=LLVM
 
 .PHONY: bin/app # To recompile bin/app everytime
 
-all: debug
+all: build-data_dictionary debug
 
 # ----- MAIN APPLICATION TARGET -----
 
@@ -12,7 +12,7 @@ debug: bin/app
 	bin/driver &
 	bin/app
 
-bin/app: src/app.c src/state_machines/fsm_lights.c
+bin/app: src/app.c $(wildcard src/state_machines/*.c)
 	gcc -I $(WORKING_DIR) -o $@ $^ lib/*.a
 
 clean:

@@ -82,14 +82,7 @@ typedef int32_t fsm_lights_t;
 /**
  * \brief Finite state machine for the blinkers systems.
  */
-typedef enum {
-  FSM_BLINKERS_OFF = 0,
-  FSM_BLINKERS_ACTIVE_ON = 1,
-  FSM_BLINKERS_ACTIVE_OFF = 2,
-  FSM_BLINKERS_ACTIVE_ON_ACQUITTED = 3,
-  FSM_BLINKERS_ACTIVE_OFF_ACQUITTED = 4,
-  FSM_BLINKERS_ERROR = -1
-} fsm_blinkers_t;
+typedef int32_t fsm_blinkers_t;
 
 /**
  * \brief Finite state machine for the wipers system.
@@ -820,30 +813,6 @@ fsm_timer_t get_fsm_right_blinker_timer();
  * \param fsm_timer_t: Timer for the right blinker FSM.
  */
 void set_fsm_right_blinker_timer(fsm_timer_t);
-
-/**
- * \brief Getter for application.fsm_warnings
- * \return fsm_blinkers_t: Current state of the FSM for the warnings.
- */
-fsm_blinkers_t get_fsm_warnings();
-
-/**
- * \brief Setter for application.fsm_warnings
- * \param fsm_blinkers_t: Current state of the FSM for the warnings.
- */
-void set_fsm_warnings(fsm_blinkers_t);
-
-/**
- * \brief Getter for application.fsm_warnings_timer
- * \return fsm_timer_t: Timer for the warnings FSM.
- */
-fsm_timer_t get_fsm_warnings_timer();
-
-/**
- * \brief Setter for application.fsm_warnings_timer
- * \param fsm_timer_t: Timer for the warnings FSM.
- */
-void set_fsm_warnings_timer(fsm_timer_t);
 
 /**
  * \brief Getter for application.fsm_wipers
