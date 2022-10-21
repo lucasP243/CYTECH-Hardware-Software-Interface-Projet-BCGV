@@ -1,3 +1,9 @@
+/**
+ * \brief This file implements a finite state machine to manage the light
+ * systems (sidelights, headlights and redlights)
+ *
+ * \author Lucas Pinard
+ */
 #ifndef FSM_LIGHTS_H
 #define FSM_LIGHTS_H
 

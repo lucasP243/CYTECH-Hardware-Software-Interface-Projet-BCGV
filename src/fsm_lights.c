@@ -1,5 +1,3 @@
-/* TODO extract header file */
-
 #include <stddef.h>
 
 #include "src/fsm_lights.h"
