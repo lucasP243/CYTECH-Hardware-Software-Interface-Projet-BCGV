@@ -12,7 +12,7 @@ debug: bin/app
 	bin/driver &
 	bin/app
 
-bin/app: src/app.c src/fsm_lights.c
+bin/app: src/app.c src/state_machines/fsm_lights.c
 	gcc -I $(WORKING_DIR) -o $@ $^ lib/*.a
 
 clean:
