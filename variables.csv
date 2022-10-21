@@ -3,14 +3,19 @@ Id;Name;Type;Dim;Default;Comment
 2;warnings_out;command_out_t;;0;Output buffer for the warnings command.
 3;sidelights_in;command_in_t;;0;Input buffer for the sidelights command.
 4;sidelights_out;command_out_t;;0;Output buffer for the sidelights command.
+55;sidelights_acknowledgement;acknowledgement_t;;false;Acknowledgement for the sidelights command message.
 5;headlights_in;command_in_t;;0;Input buffer for the headlights command.
 6;headlights_out;command_out_t;;0;Output buffer for the headlight command.
+56;headlights_acknowledgement;acknowledgement_t;;false;Acknowledgement for the headlights command message.
 7;redlights_in;command_in_t;;0;Input buffer for the redlights command.
 8;redlights_out;command_out_t;;0;Output buffer for the redlights command.
+57;redlights_acknowledgement;acknowledgement_t;;false;Acknowledgement for the redlights command message.
 9;left_blinker_in;command_in_t;;0;Input buffer for the left blinker command.
 10;left_blinker_out;command_out_t;;0;Output buffer for the left blinker command.
+58;left_blinker_acknowledgement;acknowledgement_t;;false;Acknowledgement for the left blinker command message.
 11;right_blinker_in;command_in_t;;0;Input buffer for the right blinker command.
 12;right_blinker_out;command_out_t;;0;Output buffer for the right blinker command.
+59;right_blinker_acknowledgement;acknowledgement_t;;false;Acknowledgement for the right blinker command message.
 13;wipers_in;command_in_t;;0;Input buffer for the wipers command.
 14;wipers_out;command_out_t;;0;Output buffer for the wipers command.
 15;washer_fluid_in;command_in_t;;0;Input buffer for the washer fluid command.
@@ -42,9 +47,12 @@ Id;Name;Type;Dim;Default;Comment
 41;indicator_motor_pressure;command_out_t;;0;Output buffer for the motor pressure indicator.
 42;indicator_oil_overheat;command_out_t;;0;Output buffer for the oil overhead indicator.
 43;indicator_brake_failure;command_out_t;;0;Output buffer for the brake failure indicator.
-44;fsm_sidelights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the sidelights.
-45;fsm_headlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the headlights.
-46;fsm_redlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the redlights.
+44;fsm_sidelights;fsm_lights_t;;0;Current state of the FSM for the sidelights.
+60;fsm_sidelights_timer;fsm_timer_t;;0;Timer for the sidelights FSM.
+45;fsm_headlights;fsm_lights_t;;0;Current state of the FSM for the headlights.
+61;fsm_headlights_timer;fsm_timer_t;;0;Timer for the headlights FSM.
+46;fsm_redlights;fsm_lights_t;;0;Current state of the FSM for the redlights.
+62;fsm_redlights_timer;fsm_timer_t;;0;Timer for the redlights FSM.
 47;fsm_left_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the left blinker.
 48;fsm_left_blinker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
 49;fsm_right_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the right blinker.

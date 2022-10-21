@@ -77,12 +77,7 @@ typedef uint8_t message_id_t;
 /**
  * \brief Finite state machine for the lights systems.
  */
-typedef enum {
-  FSM_LIGHTS_OFF = 0,
-  FSM_LIGHTS_ON = 1,
-  FSM_LIGHTS_ACQUITTED = 2,
-  FSM_LIGHTS_ERROR = -1
-} fsm_lights_t;
+typedef int32_t fsm_lights_t;
 
 /**
  * \brief Finite state machine for the blinkers systems.
@@ -110,6 +105,11 @@ typedef enum {
  * \brief Timer for the finite state machines.
  */
 typedef uint8_t fsm_timer_t;
+
+/**
+ * \brief Acknowledgement of a message sent.
+ */
+typedef bool acknowledgement_t;
 
 /**
  * \brief Getter for application.warnings_in
@@ -160,6 +160,19 @@ command_out_t get_sidelights_out();
 void set_sidelights_out(command_out_t);
 
 /**
+ * \brief Getter for application.sidelights_acknowledgement
+ * \return acknowledgement_t: Acknowledgement for the sidelights command
+ * message.
+ */
+acknowledgement_t get_sidelights_acknowledgement();
+
+/**
+ * \brief Setter for application.sidelights_acknowledgement
+ * \param acknowledgement_t: Acknowledgement for the sidelights command message.
+ */
+void set_sidelights_acknowledgement(acknowledgement_t);
+
+/**
  * \brief Getter for application.headlights_in
  * \return command_in_t: Input buffer for the headlights command.
  */
@@ -182,6 +195,19 @@ command_out_t get_headlights_out();
  * \param command_out_t: Output buffer for the headlight command.
  */
 void set_headlights_out(command_out_t);
+
+/**
+ * \brief Getter for application.headlights_acknowledgement
+ * \return acknowledgement_t: Acknowledgement for the headlights command
+ * message.
+ */
+acknowledgement_t get_headlights_acknowledgement();
+
+/**
+ * \brief Setter for application.headlights_acknowledgement
+ * \param acknowledgement_t: Acknowledgement for the headlights command message.
+ */
+void set_headlights_acknowledgement(acknowledgement_t);
 
 /**
  * \brief Getter for application.redlights_in
@@ -208,6 +234,18 @@ command_out_t get_redlights_out();
 void set_redlights_out(command_out_t);
 
 /**
+ * \brief Getter for application.redlights_acknowledgement
+ * \return acknowledgement_t: Acknowledgement for the redlights command message.
+ */
+acknowledgement_t get_redlights_acknowledgement();
+
+/**
+ * \brief Setter for application.redlights_acknowledgement
+ * \param acknowledgement_t: Acknowledgement for the redlights command message.
+ */
+void set_redlights_acknowledgement(acknowledgement_t);
+
+/**
  * \brief Getter for application.left_blinker_in
  * \return command_in_t: Input buffer for the left blinker command.
  */
@@ -232,6 +270,20 @@ command_out_t get_left_blinker_out();
 void set_left_blinker_out(command_out_t);
 
 /**
+ * \brief Getter for application.left_blinker_acknowledgement
+ * \return acknowledgement_t: Acknowledgement for the left blinker command
+ * message.
+ */
+acknowledgement_t get_left_blinker_acknowledgement();
+
+/**
+ * \brief Setter for application.left_blinker_acknowledgement
+ * \param acknowledgement_t: Acknowledgement for the left blinker command
+ * message.
+ */
+void set_left_blinker_acknowledgement(acknowledgement_t);
+
+/**
  * \brief Getter for application.right_blinker_in
  * \return command_in_t: Input buffer for the right blinker command.
  */
@@ -254,6 +306,20 @@ command_out_t get_right_blinker_out();
  * \param command_out_t: Output buffer for the right blinker command.
  */
 void set_right_blinker_out(command_out_t);
+
+/**
+ * \brief Getter for application.right_blinker_acknowledgement
+ * \return acknowledgement_t: Acknowledgement for the right blinker command
+ * message.
+ */
+acknowledgement_t get_right_blinker_acknowledgement();
+
+/**
+ * \brief Setter for application.right_blinker_acknowledgement
+ * \param acknowledgement_t: Acknowledgement for the right blinker command
+ * message.
+ */
+void set_right_blinker_acknowledgement(acknowledgement_t);
 
 /**
  * \brief Getter for application.wipers_in
@@ -648,6 +714,18 @@ fsm_lights_t get_fsm_sidelights();
 void set_fsm_sidelights(fsm_lights_t);
 
 /**
+ * \brief Getter for application.fsm_sidelights_timer
+ * \return fsm_timer_t: Timer for the sidelights FSM.
+ */
+fsm_timer_t get_fsm_sidelights_timer();
+
+/**
+ * \brief Setter for application.fsm_sidelights_timer
+ * \param fsm_timer_t: Timer for the sidelights FSM.
+ */
+void set_fsm_sidelights_timer(fsm_timer_t);
+
+/**
  * \brief Getter for application.fsm_headlights
  * \return fsm_lights_t: Current state of the FSM for the headlights.
  */
@@ -660,6 +738,18 @@ fsm_lights_t get_fsm_headlights();
 void set_fsm_headlights(fsm_lights_t);
 
 /**
+ * \brief Getter for application.fsm_headlights_timer
+ * \return fsm_timer_t: Timer for the headlights FSM.
+ */
+fsm_timer_t get_fsm_headlights_timer();
+
+/**
+ * \brief Setter for application.fsm_headlights_timer
+ * \param fsm_timer_t: Timer for the headlights FSM.
+ */
+void set_fsm_headlights_timer(fsm_timer_t);
+
+/**
  * \brief Getter for application.fsm_redlights
  * \return fsm_lights_t: Current state of the FSM for the redlights.
  */
@@ -670,6 +760,18 @@ fsm_lights_t get_fsm_redlights();
  * \param fsm_lights_t: Current state of the FSM for the redlights.
  */
 void set_fsm_redlights(fsm_lights_t);
+
+/**
+ * \brief Getter for application.fsm_redlights_timer
+ * \return fsm_timer_t: Timer for the redlights FSM.
+ */
+fsm_timer_t get_fsm_redlights_timer();
+
+/**
+ * \brief Setter for application.fsm_redlights_timer
+ * \param fsm_timer_t: Timer for the redlights FSM.
+ */
+void set_fsm_redlights_timer(fsm_timer_t);
 
 /**
  * \brief Getter for application.fsm_left_blinker
