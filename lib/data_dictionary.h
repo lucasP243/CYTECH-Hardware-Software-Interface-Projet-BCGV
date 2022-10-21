@@ -87,12 +87,7 @@ typedef int32_t fsm_blinkers_t;
 /**
  * \brief Finite state machine for the wipers system.
  */
-typedef enum {
-  FSM_WIPERS_OFF = 0,
-  FSM_WIPERS_ON = 1,
-  FSM_WIPERS_WASH = 2,
-  FSM_WIPERS_WAIT = 3
-} fsm_wipers_t;
+typedef int32_t fsm_wipers_t;
 
 /**
  * \brief Timer for the finite state machines.

@@ -56,5 +56,5 @@ Id;Name;Type;Dim;Default;Comment
 48;fsm_left_blinker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
 49;fsm_right_blinker;fsm_blinkers_t;;0;Current state of the FSM for the right blinker.
 50;fsm_right_blinker_timer;fsm_timer_t;;0;Timer for the right blinker FSM.
-53;fsm_wipers;fsm_wipers_t;;FSM_WIPERS_OFF;Current state of the FSM for the wipers.
+53;fsm_wipers;fsm_wipers_t;;0;Current state of the FSM for the wipers.
 54;fsm_wipers_timer;fsm_timer_t;;0;Timer for the wipers FSM.

@@ -13,6 +13,6 @@ battery_flags_t;atom;uint8_t;;Flags for the battery defects: battery low on bit 
 message_id_t;atom;uint8_t;;ID of the response message sent to the light management unit.
 fsm_lights_t;atom;int32_t;;Finite state machine for the lights systems.
 fsm_blinkers_t;atom;int32_t;;Finite state machine for the blinkers systems.
-fsm_wipers_t;enum;enum { FSM_WIPERS_OFF = 0, FSM_WIPERS_ON = 1, FSM_WIPERS_WASH = 2, FSM_WIPERS_WAIT = 3 };;Finite state machine for the wipers system.
+fsm_wipers_t;atom;int32_t;;Finite state machine for the wipers system.
 fsm_timer_t;atom;uint8_t;;Timer for the finite state machines.
 acknowledgement_t;atom;bool;;Acknowledgement of a message sent.
