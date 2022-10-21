@@ -1,6 +1,7 @@
 #include <stddef.h>
 
 #include "fsm_lights.h"
+#include "lib/data_dictionary.h"
 
 #define FSM_LIGHTS_TRANSITION_ALIGNMENT 16
 /**

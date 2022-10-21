@@ -7,8 +7,6 @@
 #ifndef FSM_LIGHTS_H
 #define FSM_LIGHTS_H
 
-#include "lib/data_dictionary.h"
-
 /**
  * \brief The different states of the lights FSM.
  */
