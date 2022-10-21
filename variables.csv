@@ -46,7 +46,7 @@ Id;Name;Type;Dim;Default;Comment
 45;fsm_headlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the headlights.
 46;fsm_redlights;fsm_lights_t;;FSM_LIGHTS_OFF;Current state of the FSM for the redlights.
 47;fsm_left_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the left blinker.
-48;fsm_left_linker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
+48;fsm_left_blinker_timer;fsm_timer_t;;0;Timer for the left blinker FSM.
 49;fsm_right_blinker;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the right blinker.
 50;fsm_right_blinker_timer;fsm_timer_t;;0;Timer for the right blinker FSM.
 51;fsm_warnings;fsm_blinkers_t;;FSM_BLINKERS_OFF;Current state of the FSM for the warnings.

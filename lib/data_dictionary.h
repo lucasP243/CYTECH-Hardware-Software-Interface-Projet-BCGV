@@ -684,16 +684,16 @@ fsm_blinkers_t get_fsm_left_blinker();
 void set_fsm_left_blinker(fsm_blinkers_t);
 
 /**
- * \brief Getter for application.fsm_left_linker_timer
+ * \brief Getter for application.fsm_left_blinker_timer
  * \return fsm_timer_t: Timer for the left blinker FSM.
  */
-fsm_timer_t get_fsm_left_linker_timer();
+fsm_timer_t get_fsm_left_blinker_timer();
 
 /**
- * \brief Setter for application.fsm_left_linker_timer
+ * \brief Setter for application.fsm_left_blinker_timer
  * \param fsm_timer_t: Timer for the left blinker FSM.
  */
-void set_fsm_left_linker_timer(fsm_timer_t);
+void set_fsm_left_blinker_timer(fsm_timer_t);
 
 /**
  * \brief Getter for application.fsm_right_blinker
