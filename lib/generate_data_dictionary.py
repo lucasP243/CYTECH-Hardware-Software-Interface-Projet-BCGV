@@ -3,17 +3,17 @@ import csv
 
 types = dict()
 
-with open('types.csv', newline='') as types_csv:
+with open('../types.csv', newline='') as types_csv:
     for line in csv.DictReader(types_csv, delimiter=';', quotechar='"'):
         types[line['Name']] = line
 
 variables = list()
 
-with open('variables.csv', newline='') as variables_csv:
+with open('../variables.csv', newline='') as variables_csv:
     for line in csv.DictReader(variables_csv, delimiter=';', quotechar='"'):
         variables.append(line)
 
-with open('lib/data_dictionary.h', mode='w') as header_file:
+with open('data_dictionary.h', mode='w') as header_file:
     header_file.write(
         """/**
          * \\file data_dictionary.h
@@ -71,7 +71,7 @@ with open('lib/data_dictionary.h', mode='w') as header_file:
 
     header_file.write("#endif")
 
-with open('lib/data_dictionary.c', mode='w') as source_file:
+with open('data_dictionary.c', mode='w') as source_file:
     source_file.write(
         """#include "data_dictionary.h"
 
