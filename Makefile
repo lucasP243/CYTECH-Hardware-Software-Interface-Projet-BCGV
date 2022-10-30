@@ -4,16 +4,14 @@ CLANG_FORMAT_FLAGS=-i --style=LLVM
 
 .PHONY: bin/app # To recompile bin/app everytime
 
-all: build-data_dictionary bin/app
-	bin/driver &
-	bin/app
+all: build-libraries bin/app
 
 bin/app: src/app.c $(wildcard src/state_machines/*.c)
 	gcc -I $(WORKING_DIR) -o $@ $^ lib/*.a
 
-build-data_dictionary:
+build-libraries:
 	(cd lib; make all)
 
 clean:
-	rm -f lib/data_dictionary.[ah]
+	(cd lib; make clean)
 	rm -f bin/app
