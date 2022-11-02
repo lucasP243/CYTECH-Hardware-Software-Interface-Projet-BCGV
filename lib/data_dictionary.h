@@ -22,6 +22,11 @@ typedef bool command_in_t;
 typedef bool command_out_t;
 
 /**
+ * \brief Status of an indicator, can be either ON (true) or OFF (false).
+ */
+typedef bool indicator_t;
+
+/**
  * \brief 8-bit CRC code.
  */
 typedef uint8_t crc_8_t;
@@ -346,16 +351,16 @@ command_out_t get_washer_fluid_out();
 void set_washer_fluid_out(command_out_t);
 
 /**
- * \brief Getter for application.comodo_crc_8
- * \return crc_8_t: Input buffer for the COMODO frame’s CRC8 code.
+ * \brief Getter for application.commodos_crc_8
+ * \return crc_8_t: Input buffer for the commodos' sent CRC8 code.
  */
-crc_8_t get_comodo_crc_8();
+crc_8_t get_commodos_crc_8();
 
 /**
- * \brief Setter for application.comodo_crc_8
- * \param crc_8_t: Input buffer for the COMODO frame’s CRC8 code.
+ * \brief Setter for application.commodos_crc_8
+ * \param crc_8_t: Input buffer for the commodos' sent CRC8 code.
  */
-void set_comodo_crc_8(crc_8_t);
+void set_commodos_crc_8(crc_8_t);
 
 /**
  * \brief Getter for application.mux_frame_id
@@ -370,128 +375,80 @@ mux_id_t get_mux_frame_id();
 void set_mux_frame_id(mux_id_t);
 
 /**
- * \brief Getter for application.frame_mileage_in
+ * \brief Getter for application.frame_mileage
  * \return frame_mileage_t: Input buffer for the vehicle’s mileage.
  */
-frame_mileage_t get_frame_mileage_in();
+frame_mileage_t get_frame_mileage();
 
 /**
- * \brief Setter for application.frame_mileage_in
+ * \brief Setter for application.frame_mileage
  * \param frame_mileage_t: Input buffer for the vehicle’s mileage.
  */
-void set_frame_mileage_in(frame_mileage_t);
+void set_frame_mileage(frame_mileage_t);
 
 /**
- * \brief Getter for application.frame_mileage_out
- * \return frame_mileage_t: Output buffer for the vehicle’s mileage.
- */
-frame_mileage_t get_frame_mileage_out();
-
-/**
- * \brief Setter for application.frame_mileage_out
- * \param frame_mileage_t: Output buffer for the vehicle’s mileage.
- */
-void set_frame_mileage_out(frame_mileage_t);
-
-/**
- * \brief Getter for application.frame_speed_in
+ * \brief Getter for application.frame_speed
  * \return frame_speed_t: Input buffer for the vehicle’s speed.
  */
-frame_speed_t get_frame_speed_in();
+frame_speed_t get_frame_speed();
 
 /**
- * \brief Setter for application.frame_speed_in
+ * \brief Setter for application.frame_speed
  * \param frame_speed_t: Input buffer for the vehicle’s speed.
  */
-void set_frame_speed_in(frame_speed_t);
+void set_frame_speed(frame_speed_t);
 
 /**
- * \brief Getter for application.frame_speed_out
- * \return frame_speed_t: Output buffer for the vehicle’s speed.
- */
-frame_speed_t get_frame_speed_out();
-
-/**
- * \brief Setter for application.frame_speed_out
- * \param frame_speed_t: Output buffer for the vehicle’s speed.
- */
-void set_frame_speed_out(frame_speed_t);
-
-/**
- * \brief Getter for application.frame_flags_in
+ * \brief Getter for application.frame_flags
  * \return frame_flags_t: Input buffer for the vehicle’s frame status
  * information.
  */
-frame_flags_t get_frame_flags_in();
+frame_flags_t get_frame_flags();
 
 /**
- * \brief Setter for application.frame_flags_in
+ * \brief Setter for application.frame_flags
  * \param frame_flags_t: Input buffer for the vehicle’s frame status
  * information.
  */
-void set_frame_flags_in(frame_flags_t);
+void set_frame_flags(frame_flags_t);
 
 /**
- * \brief Getter for application.motor_flags_in
+ * \brief Getter for application.motor_flags
  * \return motor_flags_t: Input buffer for the vehicle’s motor status
  * information.
  */
-motor_flags_t get_motor_flags_in();
+motor_flags_t get_motor_flags();
 
 /**
- * \brief Setter for application.motor_flags_in
+ * \brief Setter for application.motor_flags
  * \param motor_flags_t: Input buffer for the vehicle’s motor status
  * information.
  */
-void set_motor_flags_in(motor_flags_t);
+void set_motor_flags(motor_flags_t);
 
 /**
- * \brief Getter for application.tank_level_in
+ * \brief Getter for application.tank_level
  * \return tank_level_t: Input buffer for the vehicle’s tank fuel level.
  */
-tank_level_t get_tank_level_in();
+tank_level_t get_tank_level();
 
 /**
- * \brief Setter for application.tank_level_in
+ * \brief Setter for application.tank_level
  * \param tank_level_t: Input buffer for the vehicle’s tank fuel level.
  */
-void set_tank_level_in(tank_level_t);
+void set_tank_level(tank_level_t);
 
 /**
- * \brief Getter for application.tank_level_out
- * \return tank_level_t: Output buffer for the vehicle’s tank fuel level.
- */
-tank_level_t get_tank_level_out();
-
-/**
- * \brief Setter for application.tank_level_out
- * \param tank_level_t: Output buffer for the vehicle’s tank fuel level.
- */
-void set_tank_level_out(tank_level_t);
-
-/**
- * \brief Getter for application.motor_speed_in
+ * \brief Getter for application.motor_speed
  * \return motor_speed_t: Input buffer for the vehicle’s motor speed.
  */
-motor_speed_t get_motor_speed_in();
+motor_speed_t get_motor_speed();
 
 /**
- * \brief Setter for application.motor_speed_in
+ * \brief Setter for application.motor_speed
  * \param motor_speed_t: Input buffer for the vehicle’s motor speed.
  */
-void set_motor_speed_in(motor_speed_t);
-
-/**
- * \brief Getter for application.motor_speed_out
- * \return motor_speed_t: Output buffer for the vehicle’s motor speed.
- */
-motor_speed_t get_motor_speed_out();
-
-/**
- * \brief Setter for application.motor_speed_out
- * \param motor_speed_t: Output buffer for the vehicle’s motor speed.
- */
-void set_motor_speed_out(motor_speed_t);
+void set_motor_speed(motor_speed_t);
 
 /**
  * \brief Getter for application.battery_flags_in
@@ -580,16 +537,16 @@ command_out_t get_indicator_tire_pressure();
 void set_indicator_tire_pressure(command_out_t);
 
 /**
- * \brief Getter for application.indicator_brake_pads_failure
+ * \brief Getter for application.indicator_pads_failure
  * \return command_out_t: Output buffer for the brake pads failure indicator.
  */
-command_out_t get_indicator_brake_pads_failure();
+command_out_t get_indicator_pads_failure();
 
 /**
- * \brief Setter for application.indicator_brake_pads_failure
+ * \brief Setter for application.indicator_pads_failure
  * \param command_out_t: Output buffer for the brake pads failure indicator.
  */
-void set_indicator_brake_pads_failure(command_out_t);
+void set_indicator_pads_failure(command_out_t);
 
 /**
  * \brief Getter for application.indicator_battery_low
@@ -628,18 +585,16 @@ command_out_t get_indicator_battery_failure();
 void set_indicator_battery_failure(command_out_t);
 
 /**
- * \brief Getter for application.indicator_cooling_liquid_overheat
- * \return command_out_t: Output buffer for the cooling liquid overheat
- * indicator.
+ * \brief Getter for application.indicator_coolant_overheat
+ * \return command_out_t: Output buffer for the coolant overheat indicator.
  */
-command_out_t get_indicator_cooling_liquid_overheat();
+command_out_t get_indicator_coolant_overheat();
 
 /**
- * \brief Setter for application.indicator_cooling_liquid_overheat
- * \param command_out_t: Output buffer for the cooling liquid overheat
- * indicator.
+ * \brief Setter for application.indicator_coolant_overheat
+ * \param command_out_t: Output buffer for the coolant overheat indicator.
  */
-void set_indicator_cooling_liquid_overheat(command_out_t);
+void set_indicator_coolant_overheat(command_out_t);
 
 /**
  * \brief Getter for application.indicator_motor_pressure

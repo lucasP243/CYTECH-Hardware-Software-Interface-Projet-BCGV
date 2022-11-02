@@ -19,18 +19,14 @@ Id;Name;Type;Dim;Default;Comment
 14;wipers_out;command_out_t;;0;Output buffer for the wipers command.
 15;washer_fluid_in;command_in_t;;0;Input buffer for the washer fluid command.
 16;washer_fluid_out;command_out_t;;0;Output buffer for the washer fluid command.
-17;comodo_crc_8;crc_8_t;;0;Input buffer for the COMODO frame’s CRC8 code.
+17;commodos_crc_8;crc_8_t;;0;Input buffer for the commodos' sent CRC8 code.
 18;mux_frame_id;mux_id_t;;0;Input buffer for the MUX frame ID.
-19;frame_mileage_in;frame_mileage_t;;0;Input buffer for the vehicle’s mileage.
-20;frame_mileage_out;frame_mileage_t;;0;Output buffer for the vehicle’s mileage.
-21;frame_speed_in;frame_speed_t;;0;Input buffer for the vehicle’s speed.
-22;frame_speed_out;frame_speed_t;;0;Output buffer for the vehicle’s speed.
-23;frame_flags_in;frame_flags_t;;0;Input buffer for the vehicle’s frame status information.
-24;motor_flags_in;motor_flags_t;;0;Input buffer for the vehicle’s motor status information.
-25;tank_level_in;tank_level_t;;0;Input buffer for the vehicle’s tank fuel level.
-26;tank_level_out;tank_level_t;;0;Output buffer for the vehicle’s tank fuel level.
-27;motor_speed_in;motor_speed_t;;0;Input buffer for the vehicle’s motor speed.
-28;motor_speed_out;motor_speed_t;;0;Output buffer for the vehicle’s motor speed.
+19;frame_mileage;frame_mileage_t;;0;Input buffer for the vehicle’s mileage.
+21;frame_speed;frame_speed_t;;0;Input buffer for the vehicle’s speed.
+23;frame_flags;frame_flags_t;;0;Input buffer for the vehicle’s frame status information.
+24;motor_flags;motor_flags_t;;0;Input buffer for the vehicle’s motor status information.
+25;tank_level;tank_level_t;;0;Input buffer for the vehicle’s tank fuel level.
+27;motor_speed;motor_speed_t;;0;Input buffer for the vehicle’s motor speed.
 29;battery_flags_in;battery_flags_t;;0;Input buffer for the vehicle’s battery status information.
 30;indicator_sidelights;command_out_t;;0;Output buffer for the sidelights indicator.
 31;indicator_headlights;command_out_t;;0;Output buffer for the headlight indicator.
@@ -38,11 +34,11 @@ Id;Name;Type;Dim;Default;Comment
 33;indicator_low_fuel;command_out_t;;0;Output buffer for the low fuel indicator.
 34;indicator_motor_failure;command_out_t;;0;Output buffer for the motor failure indicator.
 35;indicator_tire_pressure;command_out_t;;0;Output buffer for the low tire pressure indicator.
-36;indicator_brake_pads_failure;command_out_t;;0;Output buffer for the brake pads failure indicator.
+36;indicator_pads_failure;command_out_t;;0;Output buffer for the brake pads failure indicator.
 37;indicator_battery_low;command_out_t;;0;Output buffer for the battery low indicator.
 38;indicator_warnings;command_out_t;;0;Output buffer for the warnings indicator.
 39;indicator_battery_failure;command_out_t;;0;Output buffer for the battery failure indicator.
-40;indicator_cooling_liquid_overheat;command_out_t;;0;Output buffer for the cooling liquid overheat indicator.
+40;indicator_coolant_overheat;command_out_t;;0;Output buffer for the coolant overheat indicator.
 41;indicator_motor_pressure;command_out_t;;0;Output buffer for the motor pressure indicator.
 42;indicator_oil_overheat;command_out_t;;0;Output buffer for the oil overhead indicator.
 43;indicator_brake_failure;command_out_t;;0;Output buffer for the brake failure indicator.

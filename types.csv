@@ -1,6 +1,7 @@
 Name;Genre;Declaration;Domain;Comment
 command_in_t;atom;bool;;Command received on input, can be either ON (true) or OFF (false).
 command_out_t;atom;bool;;Command sent on output, can be either ON (true) or OFF (false).
+indicator_t;atom;bool;;Status of an indicator, can be either ON (true) or OFF (false).
 crc_8_t;atom;uint8_t;;8-bit CRC code.
 mux_id_t;atom;uint8_t;[0, 100];ID of a MUX frame.
 frame_mileage_t;atom;uint32_t;;Mileage of the vehicle, in kilometers.

@@ -9,6 +9,8 @@ define compile_static_library
 	rm -f $(1).[!ah]
 endef
 
+.PHONY: data_dictionary.a
+
 all:
 	make data_dictionary.a
 	make crc8.a
