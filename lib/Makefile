@@ -9,16 +9,18 @@ define compile_static_library
 	rm -f $(1).[!ah]
 endef
 
-.PHONY: data_dictionary.a
+.PHONY: data_dictionary.a data_dictionary.c
 
 all:
 	make data_dictionary.a
 	make crc8.a
 
-data_dictionary.a:
-	python3 generate_data_dictionary.py
-	clang-format data_dictionary.* $(CLANG_FORMAT_FLAGS)
+data_dictionary.a: data_dictionary.c data_dictionary.h
+	clang-format $^ $(CLANG_FORMAT_FLAGS)
 	$(call compile_static_library, data_dictionary)
+
+data_dictionary.c:
+	(cd python; make)
 
 checksum.h:
 	wget -q --output-document=$@ https://raw.githubusercontent.com/lammertb/libcrc/master/include/checksum.h
