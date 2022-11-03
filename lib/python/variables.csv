@@ -28,20 +28,20 @@ Id;Name;Type;Dim;Default;Comment
 25;tank_level;tank_level_t;;0;Input buffer for the vehicle’s tank fuel level.
 27;motor_speed;motor_speed_t;;0;Input buffer for the vehicle’s motor speed.
 29;battery_flags_in;battery_flags_t;;0;Input buffer for the vehicle’s battery status information.
-30;indicator_sidelights;command_out_t;;0;Output buffer for the sidelights indicator.
-31;indicator_headlights;command_out_t;;0;Output buffer for the headlight indicator.
-32;indicator_redlights;command_out_t;;0;Output buffer for the redlights indicator.
-33;indicator_low_fuel;command_out_t;;0;Output buffer for the low fuel indicator.
-34;indicator_motor_failure;command_out_t;;0;Output buffer for the motor failure indicator.
-35;indicator_tire_pressure;command_out_t;;0;Output buffer for the low tire pressure indicator.
-36;indicator_pads_failure;command_out_t;;0;Output buffer for the brake pads failure indicator.
-37;indicator_battery_low;command_out_t;;0;Output buffer for the battery low indicator.
-38;indicator_warnings;command_out_t;;0;Output buffer for the warnings indicator.
-39;indicator_battery_failure;command_out_t;;0;Output buffer for the battery failure indicator.
-40;indicator_coolant_overheat;command_out_t;;0;Output buffer for the coolant overheat indicator.
-41;indicator_motor_pressure;command_out_t;;0;Output buffer for the motor pressure indicator.
-42;indicator_oil_overheat;command_out_t;;0;Output buffer for the oil overhead indicator.
-43;indicator_brake_failure;command_out_t;;0;Output buffer for the brake failure indicator.
+30;indicator_sidelights;indicator_t;;0;Output buffer for the sidelights indicator.
+31;indicator_headlights;indicator_t;;0;Output buffer for the headlight indicator.
+32;indicator_redlights;indicator_t;;0;Output buffer for the redlights indicator.
+33;indicator_low_fuel;indicator_t;;0;Output buffer for the low fuel indicator.
+34;indicator_motor_failure;indicator_t;;0;Output buffer for the motor failure indicator.
+35;indicator_tire_pressure;indicator_t;;0;Output buffer for the low tire pressure indicator.
+36;indicator_pads_failure;indicator_t;;0;Output buffer for the brake pads failure indicator.
+37;indicator_battery_low;indicator_t;;0;Output buffer for the battery low indicator.
+38;indicator_warnings;indicator_t;;0;Output buffer for the warnings indicator.
+39;indicator_battery_failure;indicator_t;;0;Output buffer for the battery failure indicator.
+40;indicator_coolant_overheat;indicator_t;;0;Output buffer for the coolant overheat indicator.
+41;indicator_motor_pressure;indicator_t;;0;Output buffer for the motor pressure indicator.
+42;indicator_oil_overheat;indicator_t;;0;Output buffer for the oil overhead indicator.
+43;indicator_brake_failure;indicator_t;;0;Output buffer for the brake failure indicator.
 44;fsm_sidelights;fsm_lights_t;;0;Current state of the FSM for the sidelights.
 60;fsm_sidelights_timer;fsm_timer_t;;0;Timer for the sidelights FSM.
 45;fsm_headlights;fsm_lights_t;;0;Current state of the FSM for the headlights.

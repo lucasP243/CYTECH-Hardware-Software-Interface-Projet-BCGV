@@ -11,7 +11,6 @@ motor_flags_t;atom;uint8_t;;Flags for the motor defects : motor pressure on bit 
 tank_level_t;atom;uint8_t;[0, 40];Amount of remaining fuel in the tank.
 motor_speed_t;atom;uint32_t;[0, 10000];Current motor speed, in rotations per minute.
 battery_flags_t;atom;uint8_t;;Flags for the battery defects: battery low on bit 0b01, battery failure on bit 0b10.
-message_id_t;atom;uint8_t;;ID of the response message sent to the light management unit.
 fsm_lights_t;atom;int32_t;;Finite state machine for the lights systems.
 fsm_blinkers_t;atom;int32_t;;Finite state machine for the blinkers systems.
 fsm_wipers_t;atom;int32_t;;Finite state machine for the wipers system.

@@ -15,6 +15,8 @@ with open('variables.csv', newline='') as variables_csv:
     for line in csv.DictReader(variables_csv, delimiter=';', quotechar='"'):
         variables.append(line)
 
+# Generate getters and setters
+
 for variable in variables:
     variable['Getter'] = c.Function(
         name="get_{Name}".format(**variable),
@@ -50,6 +52,11 @@ for variable in variables:
             "application.{Name} = value;".format(**variable)
         ))
 
+# Generate init function
+init = c.Function("application_init")
+for variable in variables:
+    init.add_code("application.{Name} = {Default};".format(**variable))
+
 # Generate header file
 
 header_file = c.CodeWriter()
@@ -71,14 +78,21 @@ for typedef in types.values():
         """.format(**typedef)
     )
 
+header_file.add_lines(
+    """
+    /**
+     * \\brief Initializer function for the application data.
+     */"""
+)
+header_file.add_function_prototype(init)
+
 for variable in variables:
     header_file.add_lines(
         """
         /**
          * \\brief Getter for application.{Name}.
          * \\return {Comment}
-         */
-        """.format(**variable)
+         */""".format(**variable)
     )
     header_file.add_function_prototype(variable['Getter'])
 
@@ -87,8 +101,7 @@ for variable in variables:
         /**
          * \\brief Setter for application.{Name}.
          * \\param[in] value {Comment}
-         */
-        """.format(**variable)
+         */""".format(**variable)
     )
     header_file.add_function_prototype(variable['Setter'])
 
@@ -114,5 +127,7 @@ source_file.add_variable_declaration(
 for variable in variables:
     source_file.add_function_definition(variable['Getter'])
     source_file.add_function_definition(variable['Setter'])
+
+source_file.add_function_definition(init)
 
 source_file.write_to_file("../data_dictionary.c")
