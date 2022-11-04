@@ -1,4 +1,4 @@
-WORKING_DIR=.
+WORKING_DIR=./
 GCC_FLAGS=-W -Wall -Werror -pedantic
 CLANG_FORMAT_FLAGS=-i --style=LLVM
 

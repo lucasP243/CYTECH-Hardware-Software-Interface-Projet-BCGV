@@ -9,11 +9,7 @@ define compile_static_library
 	rm -f $(1).[!ah]
 endef
 
-.PHONY: data_dictionary.a data_dictionary.c
-
-all:
-	make data_dictionary.a
-	make crc8.a
+all: data_dictionary.a crc8.a
 
 data_dictionary.a: data_dictionary.c data_dictionary.h
 	clang-format $^ $(CLANG_FORMAT_FLAGS)
