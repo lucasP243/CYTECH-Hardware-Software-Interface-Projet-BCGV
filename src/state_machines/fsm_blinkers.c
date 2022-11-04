@@ -135,7 +135,7 @@ void fsm_blinkers_tick(fsm_blinkers_t *fsm_p, fsm_blinkers_event_t event_p,
 #define FSM_BLINKERS_ACKNOWLEDGEMENT_DELAY 100
 #define FSM_BLINKERS_BLINKING_DELAY 100
 
-__attribute__((unused)) void compute_left_blinker() {
+void compute_left_blinker() {
 
   fsm_blinkers_t fsm = get_fsm_left_blinker();
   fsm_blinkers_event_t event;
@@ -167,6 +167,7 @@ __attribute__((unused)) void compute_left_blinker() {
 
   set_fsm_left_blinker(fsm);
   set_fsm_left_blinker_timer(timer);
+  set_left_blinker_acknowledgement(false);
 
   switch ((fsm_blinkers_state_t)fsm) {
 
@@ -184,7 +185,7 @@ __attribute__((unused)) void compute_left_blinker() {
   }
 }
 
-__attribute__((unused)) void compute_right_blinker() {
+void compute_right_blinker() {
 
   fsm_blinkers_t fsm = get_fsm_right_blinker();
   fsm_blinkers_event_t event;
@@ -216,6 +217,7 @@ __attribute__((unused)) void compute_right_blinker() {
 
   set_fsm_right_blinker(fsm);
   set_fsm_right_blinker_timer(timer);
+  set_right_blinker_acknowledgement(false);
 
   switch ((fsm_blinkers_state_t)fsm) {
 

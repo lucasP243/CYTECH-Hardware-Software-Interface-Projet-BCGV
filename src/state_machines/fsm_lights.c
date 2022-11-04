@@ -101,7 +101,7 @@ static void fsm_lights_tick(fsm_lights_t *fsm_p, fsm_lights_event_t event_p,
 
 #define FSM_LIGHTS_ACKNOWLEDGEMENT_DELAY 100
 
-__attribute__((unused)) void compute_headlights() {
+void compute_headlights() {
 
   // Compute event
 
@@ -131,6 +131,7 @@ __attribute__((unused)) void compute_headlights() {
 
   set_fsm_headlights(fsm);
   set_fsm_headlights_timer(timer);
+  set_headlights_acknowledgement(false);
 
   switch ((fsm_lights_state_t)fsm) {
 
@@ -152,7 +153,7 @@ __attribute__((unused)) void compute_headlights() {
   }
 }
 
-__attribute__((unused)) void compute_sidelights_event() {
+void compute_sidelights() {
 
   fsm_lights_t fsm = get_fsm_sidelights();
   fsm_lights_event_t event;
@@ -182,6 +183,7 @@ __attribute__((unused)) void compute_sidelights_event() {
 
   set_fsm_sidelights(fsm);
   set_fsm_sidelights_timer(fsm);
+  set_sidelights_acknowledgement(false);
 
   switch ((fsm_lights_state_t)fsm) {
 
@@ -203,7 +205,7 @@ __attribute__((unused)) void compute_sidelights_event() {
   }
 }
 
-__attribute__((unused)) void compute_redlights() {
+void compute_redlights() {
 
   fsm_lights_t fsm = get_fsm_redlights();
   fsm_lights_event_t event;
@@ -233,6 +235,7 @@ __attribute__((unused)) void compute_redlights() {
 
   set_fsm_redlights(fsm);
   set_fsm_redlights_timer(timer);
+  set_redlights_acknowledgement(false);
 
   switch ((fsm_lights_state_t)fsm) {
 

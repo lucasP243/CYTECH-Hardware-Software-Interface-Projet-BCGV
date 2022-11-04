@@ -1,11 +1,8 @@
 /**
  * \brief This file implements a finite state machine to manage the wipers
  * system.
- *
- * \author Lucas Pinard
  */
 #ifndef FSM_WIPERS_H
-#define FSM_WIPERS_H
 
 #include "lib/data_dictionary.h"
 

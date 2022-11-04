@@ -111,7 +111,7 @@ void fsm_wipers_tick(fsm_wipers_t *fsm_p, fsm_wipers_event_t event_p,
 
 #define FSM_WIPERS_WAITING_DELAY 200
 
-__attribute__((unused)) void compute_wipers() {
+void compute_wipers() {
 
   fsm_wipers_t fsm = get_fsm_wipers();
   fsm_wipers_event_t event;
