@@ -1,14 +1,16 @@
-    /**
+/**
  * \file        drv_api.h
  * \author      Alexis Daley
  * \version     1.0
  * \date        27/02/2022
  * \brief       This file describe the interface with driver
  * \details     It provides following functions : 
- *              - drv_open : Open connection between client and driver
- *              - drv_open : Open connection between client and driver
- *              - drv_open : Open connection between client and driver
- *              - drv_open : Open connection between client and driver
+ *              - drv_open              : Open connection between client and driver
+ *              - drv_read_udp_10ms     : Read UDP 10ms frame in blocking mode(block until receiving a frame)
+ *              - drv_write_udp_20ms    : Write udp 20ms frame
+ *              - drv_read_lns          : Read lns messages received on all lines
+ *              - drv_write_lns         : Write lns messages
+ *              - drv_close             : close connexion between client and driver
  *              Must be delivered with static library (drv_api.a) and driver executable file (driver)
  */
 
@@ -23,14 +25,14 @@
 #define DRV_SUCCESS 0
 #define DRV_ERROR   -1
 
-#define DRV_MAX_FRAME_SIZE      (255)
-#define DRV_MAX_FRAME_READ      (8)
+#define LNS_MAX_FRAME_SIZE      (2)
+#define DRV_MAX_FRAMES          (8)
 #define DRV_UDP_10MS_FRAME_SIZE (14)
 #define DRV_UDP_20MS_FRAME_SIZE (9)
 
 typedef struct {
     uint32_t serNum;                    /* Physical ser number */
-    uint8_t frame[DRV_MAX_FRAME_SIZE];  /* Frame received/to write */
+    uint8_t frame[LNS_MAX_FRAME_SIZE];  /* Frame received/to write */
     size_t frameSize;                   /* Size of received frame */
 } lns_frame_t;
 
@@ -65,7 +67,7 @@ int32_t drv_write_udp_20ms(int32_t drvFd, uint8_t udpFrame[DRV_UDP_20MS_FRAME_SI
  * \param[out]  lnsDataLen  : Number of element in lnsData structure
  * \return int32_t : DRV_SUCCESS, or DRV_ERROR if an error occurs (errno is set)
  */
-int32_t drv_read_lns(int32_t drvFd, lns_frame_t lnsData[DRV_MAX_FRAME_READ], uint32_t lnsDataLen);
+int32_t drv_read_lns(int32_t drvFd, lns_frame_t lnsData[DRV_MAX_FRAMES], uint32_t* lnsDataLen);
 
 /**
  * \brief Write data on lns lines

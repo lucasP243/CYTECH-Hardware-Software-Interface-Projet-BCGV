@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -610,7 +611,7 @@
             [
               {
                 "params": [
-                  "voy_ess"
+                  "feu_clign_d"
                 ],
                 "type": "field"
               }

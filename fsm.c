@@ -1,9 +1,4 @@
-typedef struct {
-    int state;
-    int event;
-    int (*callback)(void);
-    int next_state;
-} tTransition;
+// includes
 
 /* States */
 #define ST_ANY                             -1
@@ -15,12 +10,13 @@ typedef struct {
 #define ST_CONNECTED                        5
 #define ST_TERM                           255
 
+/* Events */
 #define EV_NONE                             0
 #define EV_ANY                             -1
 #define EV_CONNECTION_REQUEST_LOOP       5000
 #define EV_CONNECTION_TO_OPERATIONNEL    5001
 
-/* Functions called on transitions */
+/* Callback functions called on transitions */
 static int ConnectionRequested (void) { ... };
 static int Operational (void) { ... };
 static int Connected (void) { ... };
@@ -28,7 +24,15 @@ static int Disconnected (void) { ... };
 static int Disconnected (void) { ... };
 static int FsmError(void) { ... };
 
-/* Transitions */
+/* Transition structure */
+typedef struct {
+    int state;
+    int event;
+    int (*callback)(void);
+    int next_state;
+} tTransition;
+
+/* Transition table */
 tTransition trans[] = {
     { ST_CONNECTION_REQUESTED, EV_CONNECTION_REQUEST_LOOP, &ConnectionRequested, ST_CONNECTION_REQUESTED},
     { ST_ANY, EV_ANY, &FsmError, ST_TERM}
