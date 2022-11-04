@@ -5,7 +5,9 @@
  *
  * \authors Lucas Pinard & Amélie Guédès
  */
+#include <inttypes.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "lib/checksum.h"
 #include "lib/data_dictionary.h"
@@ -99,7 +101,7 @@ int main(void) {
   driver_fd = drv_open();
 
   if (driver_fd == DRV_ERROR) {
-    // TODO print error message
+    perror("[ERROR] Failed to open driver");
   }
 
   lns_status = DRV_ERROR;
@@ -110,6 +112,9 @@ int main(void) {
   main_loop();
 
   // If main loop is exited, program has failed
+  if (drv_close(driver_fd) == DRV_ERROR) {
+    perror("[ERROR] Failed to close driver");
+  }
   return EXIT_FAILURE;
 }
 
@@ -123,13 +128,18 @@ void main_loop(void) {
     decode_mux(out_udp_frame);
 
     if (get_mux_frame_id() != (last_read + 1) % MUX_ID_MAX) {
-      // TODO print warning message
+      if (fprintf(stderr,
+                  "[WARN] Received MUX frame ID (%" PRIu8 ")"
+                  " but expected (%" PRIu8 ")",
+                  get_mux_frame_id(), (last_read + 1) % MUX_ID_MAX) < 0) {
+        perror("[WARN] Failed to write to stderr");
+      }
     }
     last_read = get_mux_frame_id();
 
     lns_status = drv_read_lns(driver_fd, out_lns_frame, &out_lns_frame_count);
     if (lns_status == DRV_ERROR) {
-      // TODO print error message
+      perror("[ERROR] Failed to read from LNS");
       return;
     }
 
@@ -188,7 +198,7 @@ void main_loop(void) {
     drv_write_lns(driver_fd, out_lns_frame, BGF_OUT_FRAME_COUNT);
   }
 
-  // TODO print error message
+  perror("[ERROR] Failed to read from UDP");
 }
 
 void decode_commodos(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
@@ -204,7 +214,12 @@ void decode_commodos(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
   uint8_t computed_crc_8 = crc_8(&command_byte, 1);
 
   if (get_commodos_crc_8() != computed_crc_8) {
-    // TODO print WARN: CRC8 checksum failed
+    if (fprintf(stderr,
+                "[WARN] Checksum verification failed"
+                " (expected %" PRIX8 ", found %" PRIX8 ")",
+                get_commodos_crc_8(), computed_crc_8) < 0) {
+      perror("[WARN] Failed to write to stderr");
+    }
   }
 
   // Extract commands from command_byte
