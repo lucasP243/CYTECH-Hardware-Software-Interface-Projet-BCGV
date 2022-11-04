@@ -102,6 +102,7 @@ int main(void) {
 
   if (driver_fd == DRV_ERROR) {
     perror("[ERROR] Failed to open driver");
+    return EXIT_FAILURE;
   }
 
   lns_status = DRV_ERROR;
@@ -127,11 +128,11 @@ void main_loop(void) {
 
     decode_mux(out_udp_frame);
 
-    if (get_mux_frame_id() != (last_read + 1) % MUX_ID_MAX) {
+    if (get_mux_frame_id() != (last_read % MUX_ID_MAX) + 1) {
       if (fprintf(stderr,
                   "[WARN] Received MUX frame ID (%" PRIu8 ")"
-                  " but expected (%" PRIu8 ")",
-                  get_mux_frame_id(), (last_read + 1) % MUX_ID_MAX) < 0) {
+                  " but expected (%" PRIu8 ")\n",
+                  get_mux_frame_id(), (last_read % MUX_ID_MAX) + 1) < 0) {
         perror("[WARN] Failed to write to stderr");
       }
     }
@@ -191,11 +192,16 @@ void main_loop(void) {
 
     // Encoding and sending UDP
     encode_mux(out_udp_frame);
-    drv_write_udp_20ms(driver_fd, out_udp_frame);
+    if (drv_write_udp_20ms(driver_fd, out_udp_frame) == DRV_ERROR) {
+      perror("[ERROR] Failed to write to UDP");
+    }
 
     // Encoding and sending LNS
     encode_bgf(out_lns_frame);
-    drv_write_lns(driver_fd, out_lns_frame, BGF_OUT_FRAME_COUNT);
+    if (drv_write_lns(driver_fd, out_lns_frame, BGF_OUT_FRAME_COUNT) ==
+        DRV_ERROR) {
+      perror("[ERROR] Failed to write to LNS");
+    }
   }
 
   perror("[ERROR] Failed to read from UDP");
@@ -216,7 +222,7 @@ void decode_commodos(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
   if (get_commodos_crc_8() != computed_crc_8) {
     if (fprintf(stderr,
                 "[WARN] Checksum verification failed"
-                " (expected %" PRIX8 ", found %" PRIX8 ")",
+                " (expected %" PRIX8 ", found %" PRIX8 ")\n",
                 get_commodos_crc_8(), computed_crc_8) < 0) {
       perror("[WARN] Failed to write to stderr");
     }

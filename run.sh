@@ -1,2 +1,4 @@
 #!/bin/bash
-bin/driver & bin/app
+bin/driver &
+sleep 1e-3
+bin/app
