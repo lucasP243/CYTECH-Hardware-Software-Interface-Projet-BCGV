@@ -3,18 +3,26 @@
  * \brief This file acts as the middleware of the BCGV application, and is its
  * entrypoint.
  *
- * \details Up to the current revision, this program only reads UDP frames from
- * the driver and writes those raw (in hexadecimal) to the standard output.
- *
- * \author Pinard Lucas
+ * \authors Lucas Pinard & Amélie Guédès
  */
-#include <inttypes.h>
 #include <stdint.h>
-#include <stdio.h>
 
 #include "lib/checksum.h"
 #include "lib/data_dictionary.h"
 #include "lib/drv_api.h"
+#include "src/state_machines/fsm_blinkers.h"
+#include "src/state_machines/fsm_lights.h"
+#include "src/state_machines/fsm_wipers.h"
+
+#define LOW_FUEL_THRESHOLD 5
+
+/**
+ * \brief List of serial numbers of devices connected to the BCGV by LNS.
+ */
+typedef enum lns_serial_number_t {
+  BGF_SERIAL_NUMBER = 11,
+  COMMODOS_SERIAL_NUMBER = 12,
+} lns_serial_number_t;
 
 /**
  * \brief List of masks to decode the commands byte of the LNS frame received
@@ -38,8 +46,16 @@ typedef enum commodos_decode_masks_t {
  * \param[in] lns_frame_p The LNS frame.
  * \param[in] lns_frame_size_p The size of the frame.
  */
-void decode_commodos(const uint8_t lns_frame_p[DRV_MAX_FRAME_SIZE],
+void decode_commodos(const uint8_t lns_frame_p[LNS_MAX_FRAME_SIZE],
                      size_t lns_frame_size_p);
+/**
+ * \brief Decodes LNS frames from the BGF and sets application data accordingly.
+ *
+ * \param[in] lns_frame_p The LNS frame.
+ * \param[in] lns_frame_size_p The size of the frame.
+ */
+void decode_bgf(const uint8_t lns_frame_p[LNS_MAX_FRAME_SIZE],
+                size_t lns_frame_size_p);
 
 /**
  * \brief Decodes UDP frames from the MUX and sets application data
@@ -56,7 +72,7 @@ void decode_mux(const uint8_t data_p[DRV_UDP_10MS_FRAME_SIZE]);
  * \brief Creates and encodes the LNS frames for the BGF from application data.
  * \param[out] lns_frame_p Structure to fill with the LNS frames
  */
-void encode_bgf(uint_t lns_frame_p[BGF_OUT_FRAME_COUNT][BGF_OUT_FRAME_SIZE]);
+void encode_bgf(lns_frame_t lns_frame_p[DRV_MAX_FRAMES]);
 
 /**
  * \brief Creates and encodes the UDP frame for the MUX from application data.
@@ -64,27 +80,115 @@ void encode_bgf(uint_t lns_frame_p[BGF_OUT_FRAME_COUNT][BGF_OUT_FRAME_SIZE]);
  */
 void encode_mux(uint8_t udp_frame_p[DRV_UDP_20MS_FRAME_SIZE]);
 
-__attribute__((noreturn)) int main(void) {
+/**
+ * \brief Main loop of the application.
+ */
+void main_loop(void);
 
-  int32_t driver_fd = DRV_ERROR;
-  uint8_t out_udp_frame[DRV_UDP_10MS_FRAME_SIZE];
+// Main function runtime variables
+
+int32_t driver_fd;
+uint8_t out_udp_frame[DRV_UDP_10MS_FRAME_SIZE];
+lns_frame_t out_lns_frame[DRV_MAX_FRAMES];
+uint32_t out_lns_frame_count;
+uint32_t lns_status;
+mux_id_t last_read;
+
+int main(void) {
 
   driver_fd = drv_open();
 
   if (driver_fd == DRV_ERROR) {
-    perror("Unable to open connection to driver");
+    // TODO print error message
   }
 
-  while (1) {
+  lns_status = DRV_ERROR;
+  last_read = 0;
 
-    drv_read_udp_10ms(driver_fd, out_udp_frame);
+  application_init();
+
+  main_loop();
+
+  // If main loop is exited, program has failed
+  return EXIT_FAILURE;
+}
+
+#define MUX_ID_MAX 100
+
+void main_loop(void) {
 
 #pragma unroll
-    for (size_t i = 0; i < DRV_UDP_10MS_FRAME_SIZE; i++) {
-      (void)fprintf(stdout, "%08" PRIX32, out_udp_frame[i]);
+  while (drv_read_udp_10ms(driver_fd, out_udp_frame) == DRV_SUCCESS) {
+
+    decode_mux(out_udp_frame);
+
+    if (get_mux_frame_id() != (last_read + 1) % MUX_ID_MAX) {
+      // TODO print warning message
     }
-    (void)fputs("\n", stdout);
+    last_read = get_mux_frame_id();
+
+    lns_status = drv_read_lns(driver_fd, out_lns_frame, &out_lns_frame_count);
+    if (lns_status == DRV_ERROR) {
+      // TODO print error message
+      return;
+    }
+
+#pragma unroll 2
+    for (size_t i = 0; i < out_lns_frame_count; i++) {
+
+      switch (out_lns_frame[i].serNum) {
+
+      case BGF_SERIAL_NUMBER:
+        decode_bgf(out_lns_frame[i].frame, out_lns_frame[i].frameSize);
+        break;
+
+      case COMMODOS_SERIAL_NUMBER:
+        decode_commodos(out_lns_frame[i].frame, out_lns_frame[i].frameSize);
+        break;
+      }
+    }
+
+    // Run state machines
+    compute_sidelights();
+    compute_headlights();
+    compute_redlights();
+
+    compute_left_blinker();
+    compute_right_blinker();
+
+    compute_wipers();
+
+    // Transfer remaining IN signals to OUT signals
+    set_indicator_tire_pressure(get_frame_flags() &
+                                FRAME_FLAGS_MASK_TIRE_PRESSURE);
+    set_indicator_pads_failure(get_frame_flags() & FRAME_FLAGS_MASK_BRAKE_PADS);
+
+    set_indicator_motor_pressure(get_motor_flags() &
+                                 MOTOR_FLAGS_MASK_MOTOR_PRESSURE);
+    set_indicator_coolant_overheat(get_motor_flags() &
+                                   MOTOR_FLAGS_MASK_COOLANT_TEMPERATURE);
+    set_indicator_oil_overheat(get_motor_flags() &
+                               MOTOR_FLAGS_MASK_OIL_TEMPERATURE);
+
+    set_indicator_low_fuel(get_tank_level() < LOW_FUEL_THRESHOLD);
+
+    set_indicator_battery_low(get_battery_flags_in() & BATTERY_FLAGS_MASK_LOW);
+    set_indicator_battery_failure(get_battery_flags_in() &
+                                  BATTERY_FLAGS_MASK_FAILURE);
+
+    set_indicator_motor_failure(false); // No input for that
+    set_indicator_brake_failure(false); // No input for that
+
+    // Encoding and sending UDP
+    encode_mux(out_udp_frame);
+    drv_write_udp_20ms(driver_fd, out_udp_frame);
+
+    // Encoding and sending LNS
+    encode_bgf(out_lns_frame);
+    drv_write_lns(driver_fd, out_lns_frame, BGF_OUT_FRAME_COUNT);
   }
+
+  // TODO print error message
 }
 
 void decode_commodos(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
@@ -99,7 +203,7 @@ void decode_commodos(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
   set_commodos_crc_8(crc_8_byte);
   uint8_t computed_crc_8 = crc_8(&command_byte, 1);
 
-  if (crc_8_byte != computed_crc_8) {
+  if (get_commodos_crc_8() != computed_crc_8) {
     // TODO print WARN: CRC8 checksum failed
   }
 
@@ -160,27 +264,73 @@ typedef enum bgf_encoding_constants_t {
   BGF_VALUE_ON = 0x1,
 } bgf_encoding_constants_t;
 
-void encode_bgf(uint_t lns_frame_p[BGF_OUT_FRAME_COUNT][BGF_OUT_FRAME_SIZE]) {
+void encode_bgf(lns_frame_t *lns_frame_p) {
 
-  lns_frame_p[BGF_FIRST_FRAME_INDEX][BGF_FRAME_ID_INDEX] = BGF_FIRST_FRAME_ID;
-  lns_frame_p[BGF_FIRST_FRAME_INDEX][BGF_FRAME_VALUE_INDEX] =
+  lns_frame_p[BGF_FIRST_FRAME_INDEX].serNum = BGF_SERIAL_NUMBER;
+  lns_frame_p[BGF_FIRST_FRAME_INDEX].serNum = BGF_OUT_FRAME_SIZE;
+  lns_frame_p[BGF_FIRST_FRAME_INDEX].frame[BGF_FRAME_ID_INDEX] =
+      BGF_FIRST_FRAME_ID;
+  lns_frame_p[BGF_FIRST_FRAME_INDEX].frame[BGF_FRAME_VALUE_INDEX] =
       (get_sidelights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
 
-  lns_frame_p[BGF_SECOND_FRAME_INDEX][BGF_FRAME_ID_INDEX] = BGF_SECOND_FRAME_ID;
-  lns_frame_p[BGF_SECOND_FRAME_INDEX][BGF_FRAME_VALUE_INDEX] =
+  lns_frame_p[BGF_SECOND_FRAME_INDEX].serNum = BGF_SERIAL_NUMBER;
+  lns_frame_p[BGF_SECOND_FRAME_INDEX].serNum = BGF_OUT_FRAME_SIZE;
+  lns_frame_p[BGF_SECOND_FRAME_INDEX].frame[BGF_FRAME_ID_INDEX] =
+      BGF_SECOND_FRAME_ID;
+  lns_frame_p[BGF_SECOND_FRAME_INDEX].frame[BGF_FRAME_VALUE_INDEX] =
       (get_headlights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
 
-  lns_frame_p[BGF_THIRD_FRAME_INDEX][BGF_FRAME_ID_INDEX] = BGF_THIRD_FRAME_ID;
-  lns_frame_p[BGF_THIRD_FRAME_INDEX][BGF_FRAME_VALUE_INDEX] =
-      (get_headlights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
+  lns_frame_p[BGF_THIRD_FRAME_INDEX].serNum = BGF_SERIAL_NUMBER;
+  lns_frame_p[BGF_THIRD_FRAME_INDEX].serNum = BGF_OUT_FRAME_SIZE;
+  lns_frame_p[BGF_THIRD_FRAME_INDEX].frame[BGF_FRAME_ID_INDEX] =
+      BGF_THIRD_FRAME_ID;
+  lns_frame_p[BGF_THIRD_FRAME_INDEX].frame[BGF_FRAME_VALUE_INDEX] =
+      (get_redlights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
 
-  lns_frame_p[BGF_FOURTH_FRAME_INDEX][BGF_FRAME_ID_INDEX] = BGF_FOURTH_FRAME_ID;
-  lns_frame_p[BGF_FOURTH_FRAME_INDEX][BGF_FRAME_VALUE_INDEX] =
-      (get_headlights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
+  lns_frame_p[BGF_FOURTH_FRAME_INDEX].serNum = BGF_SERIAL_NUMBER;
+  lns_frame_p[BGF_FOURTH_FRAME_INDEX].serNum = BGF_OUT_FRAME_SIZE;
+  lns_frame_p[BGF_FOURTH_FRAME_INDEX].frame[BGF_FRAME_ID_INDEX] =
+      BGF_FOURTH_FRAME_ID;
+  lns_frame_p[BGF_FOURTH_FRAME_INDEX].frame[BGF_FRAME_VALUE_INDEX] =
+      (get_right_blinker_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
 
-  lns_frame_p[BGF_FIFTH_FRAME_INDEX][BGF_FRAME_ID_INDEX] = BGF_FIFTH_FRAME_ID;
-  lns_frame_p[BGF_FIFTH_FRAME_INDEX][BGF_FRAME_VALUE_INDEX] =
-      (get_headlights_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
+  lns_frame_p[BGF_FIFTH_FRAME_INDEX].serNum = BGF_SERIAL_NUMBER;
+  lns_frame_p[BGF_FIFTH_FRAME_INDEX].serNum = BGF_OUT_FRAME_SIZE;
+  lns_frame_p[BGF_FIFTH_FRAME_INDEX].frame[BGF_FRAME_ID_INDEX] =
+      BGF_FIFTH_FRAME_ID;
+  lns_frame_p[BGF_FIFTH_FRAME_INDEX].frame[BGF_FRAME_VALUE_INDEX] =
+      (get_left_blinker_out() ? BGF_VALUE_ON : BGF_VALUE_OFF);
+}
+
+void decode_bgf(const uint8_t *lns_frame_p, size_t lns_frame_size_p) {
+
+  if (lns_frame_size_p < 2) { // Only frames treated are 2B
+    return;
+  }
+
+  // Big Endian, id is on first byte
+  switch (lns_frame_p[0]) {
+
+  case BGF_FIRST_FRAME_ID:
+    set_sidelights_acknowledgement(true);
+    break;
+
+  case BGF_SECOND_FRAME_ID:
+    set_headlights_acknowledgement(true);
+    break;
+
+  case BGF_THIRD_FRAME_ID:
+    set_redlights_acknowledgement(true);
+    break;
+
+  case BGF_FOURTH_FRAME_ID:
+    set_right_blinker_acknowledgement(true);
+    break;
+
+  case BGF_FIFTH_FRAME_ID:
+    set_left_blinker_acknowledgement(true);
+    break;
+  }
 }
 
 /**
