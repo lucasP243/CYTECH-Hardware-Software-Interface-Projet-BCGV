@@ -16,3 +16,6 @@ fsm_blinkers_t;atom;int32_t;;Finite state machine for the blinkers systems.
 fsm_wipers_t;atom;int32_t;;Finite state machine for the wipers system.
 fsm_timer_t;atom;uint8_t;;Timer for the finite state machines.
 acknowledgement_t;atom;bool;;Acknowledgement of a message sent.
+frame_flags_mask_t;enum;{'TIRE_PRESSURE': 0x1, 'BRAKE_PADS': 0x2};;Masks for frame_flags_t.
+motor_flags_mask_t;enum;{'MOTOR_PRESSURE': 0x1, 'COOLANT_TEMPERATURE': 0x2, 'OIL_TEMPERATURE': 0x4};;Masks for motor_flags_t.
+battery_flags_mask_t;enum;{'LOW': 0x1, 'FAILURE': 0x2};;Masks for battery_flags_t.

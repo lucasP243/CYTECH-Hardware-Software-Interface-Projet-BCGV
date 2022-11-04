@@ -69,14 +69,30 @@ header_file.include("<stdbool.h>")
 header_file.include("<stdint.h>")
 
 for typedef in types.values():
-    header_file.add_lines(
-        """
-        /**
-         * \\brief {Comment}
-         */
-         typedef {Declaration} {Name};
-        """.format(**typedef)
-    )
+
+    if typedef['Genre'] == 'atom':
+        header_file.add_lines(
+            """
+            /**
+             * \\brief {Comment}
+             */
+             typedef {Declaration} {Name};
+            """.format(**typedef)
+        )
+    elif typedef['Genre'] == 'enum':
+        typedef_enum = c.Enum(
+            name=typedef['Name'],
+            typedef=True,
+            prefix=typedef['Name'][:-1].upper()
+        )
+        typedef_enum.add_values(eval(typedef['Declaration']))
+        header_file.add_lines(
+            """
+            /**
+             * \\brief {Comment}
+             */""".format(**typedef)
+        )
+        header_file.add_enum(typedef_enum)
 
 header_file.add_lines(
     """

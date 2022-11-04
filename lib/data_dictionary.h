@@ -104,6 +104,31 @@ typedef uint8_t fsm_timer_t;
 typedef bool acknowledgement_t;
 
 /**
+ * \brief Masks for frame_flags_t.
+ */
+typedef enum {
+  FRAME_FLAGS_MASK_TIRE_PRESSURE = 1,
+  FRAME_FLAGS_MASK_BRAKE_PADS = 2
+} frame_flags_mask_t;
+
+/**
+ * \brief Masks for motor_flags_t.
+ */
+typedef enum {
+  MOTOR_FLAGS_MASK_MOTOR_PRESSURE = 1,
+  MOTOR_FLAGS_MASK_COOLANT_TEMPERATURE = 2,
+  MOTOR_FLAGS_MASK_OIL_TEMPERATURE = 4
+} motor_flags_mask_t;
+
+/**
+ * \brief Masks for battery_flags_t.
+ */
+typedef enum {
+  BATTERY_FLAGS_MASK_LOW = 1,
+  BATTERY_FLAGS_MASK_FAILURE = 2
+} battery_flags_mask_t;
+
+/**
  * \brief Initializer function for the application data.
  */
 void application_init(void);
