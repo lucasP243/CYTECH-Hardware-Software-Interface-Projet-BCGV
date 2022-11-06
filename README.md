@@ -12,6 +12,8 @@ L'application implémente des fonctions d'encodage et de décodages de champs de
 bits nécessaire au traitement des trames reçue ainsi que des automates finis
 encodant les états et transitions des feux et des essuie-glace du véhicule.
 
+<img src="grafana_screen.png"  alt="capture de notre dashboard sur grafana"/>
+
 ## Architecture du projet
 
 * __bin/ :__ fichiers compilés exécutables (application et driver)
@@ -41,8 +43,8 @@ dictionnaire de données tel que défini initialement.
 
 ### 2. Développement du script de génération du dictionnaire de données
 
-Une fois le dictionnaire de données élaboré (`lib/python/types.csv`
-, `lib/python/variables.csv`), nous avons développé un script python3 permettant
+Une fois le dictionnaire de données élaboré ([`lib/python/types.csv`](lib/python/types.csv)
+, [`lib/python/variables.csv`](lib/python/variables.csv)), nous avons développé un script python3 permettant
 de générer le code de la librairie statique. Ce script utilise notamment le
 module `csnake` permettant d'automatiser la génération de code C. Il lit
 initialement les CSV dans des listes, puis les utilises pour créer les objets
@@ -56,7 +58,7 @@ L'exécution du script, le formatage et la compilation des fichiers générés s
 délégués à un Makefile
 (voir [la section correspondante](#5-cration-des-makefile)).
 
-### 3. Premier `main()`
+### <a id="3-premier-main" /> 3. Premier `main()`
 
 Le premier `main()` développé n'implémente que la lecture et l'affichage de la
 trame UDP envoyée périodiquement toutes les 10ms. Cette fonction n'est plus dans
@@ -90,7 +92,7 @@ int main(void) {
 
 ### 4. Développement des automates finis
 
-Le projet implémente (dans `src/state_machines/`) trois automates
+Le projet implémente (dans [`src/state_machines/`](src/state_machines/)) trois automates
 distincts : `fsm_lights` pour gérer l'allumage de chacun des
 feux, `fsm_blinkers` pour l'allumage des clignotants gauche et droite
 et `fsm_wipers` pour les essuie-glace.
@@ -104,18 +106,18 @@ détermine l'évènement en cours en fonction des variables globales de
 l'application et met à jour ces données en fonction de l'état résultant de
 l'automate.
 
-### 5. Création des Makefile
+### <a id="5-cration-des-makefile" />5. Création des Makefile
 
 Le projet utilise un Makefile sur 3 niveaux :
 
-* __lib/python/Makefile :__ Ce Makefile crée un virtualenv python et exécute le
+* __[lib/python/Makefile](lib/python/Makefile) :__ Ce Makefile crée un virtualenv python et exécute le
   script générant le dictionnaire de données, puis supprime le virtualenv.
-* __lib/Makefile :__ Ce Makefile compile les différentes librairies statiques
+* __[lib/Makefile](lib/Makefile) :__ Ce Makefile compile les différentes librairies statiques
     * `data-dictionary.a` est créé en compilant le fichier `.c` généré en
       appelant le Makefile sous `lib/python/`
     * `crc8.a` est créé en téléchargeant les fichiers `checksum.h` et `crc8.c`
       depuis GitHub et en les compilant
-* __./Makefile :__ Le Makefile top level compile les fichiers sources en
+* __[./Makefile](./Makefile) :__ Le Makefile top level compile les fichiers sources en
   intégrant les librairies statiques générées par le Makefile sous `lib/`
 
 ### 6. Fonctions de décodage
@@ -156,6 +158,6 @@ implémentation complète de la séquence du programme.
 À l'exécution, le seul problème que nous ayons constaté est que les feux
 semblent ne jamais s'allumer. En s'aidant du debugger, nous avons remarqué que
 les messages d'acquittements n'étaient jamais reçus (tous les messages reçus par
-le LNS portaient le serial number 12, celui des commodos). Faute de temps, nous
+le LNS portaient le serial number 12, celui des commodos). Par manque de temps, nous
 n'avons pas pu identifier l'origine de cette faute, ni si celle-ci cachait
-encore d'autres fautes.
+encore d'autres erreurs.
